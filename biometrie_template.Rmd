@@ -4,7 +4,6 @@ authors: "Cheyenne Brouwer, Kasthury Inparajah, Demi van 't Oever, Willem-Danië
 date: "`24-04-2023`"
 output:
   html_document:
-    css: style.css
     toc: yes
     toc_depth: 3
     toc_float:
@@ -56,33 +55,29 @@ Een metende onderzoeker legt het maatlat opnieuw op de handen van de studenten m
 
 
 
-## Uitvoering
-
-:::attention
-Je moet de onderzoeksresultaten in deze vorm opslaan:  
-
-<pre>
-laborant_ID,subject_ID,handlengte,handbreedte,sexe
-3241,G1_03,113,104,m
-<meer rijen met data>
-</pre>
-:::
-
-
 ## Analyse
 
 ### Lees je eigen data in
 
 Om data vanuit een tekstbestand in te lezen kan je dit codeblok gebruiken, aannemend dat je data er exact zo uitzien als in bovenstaande voorbeeld:
 
-```{r demo-data-inlees, eval=FALSE}
-data_file <- "/Users/cheyennebrouwer/Documents/22_23/Kwartaal_4/wetenschappelijke_cyclus/Biometrie_3.csv"
+```{r demo-data-inlees}
+data_file <- "./Biometrie_3.csv"
 
 #data format: laborant_ID,subject_ID,handlengte,handbreedte,sexe
 biometric_data <- read.table(file = data_file,
                         header = TRUE,
                         sep = ",")
+print(biometric_data)
+sort(biometric_data$sexe)
 
+library(plyr)
+mu_handlengte <- ddply(
+  biometric_data, 
+  "sexe", 
+  summarise,
+  grp.mean=mean(handlengte))
+head(mu_handlengte)
 ```
 
 Let op: als je missende data hebt moet je die specificeren door dit argument toe te voegen: `na.strings = "<jouw NA symbool>"`
@@ -101,11 +96,34 @@ Hoe kleiner de steekproefgrootte (_sample size_) hoe lastiger het is de onderlig
 Neem voor _n_ bijvoorbeeld achtereenvolgens 10, 100, 1000, 10000, 10000 en voor _breaks_ 5, 10, 50. Wanneer zie je een echte normaalverdeling verschijnen? 
 
 ```{r sampling-demo, fig.asp=.6, out.width='60%', fig.align='center'}
-hist_data <- data.frame(x = rnorm(n = 100))
-ggplot(data = hist_data,
-       mapping = aes(x = x)) +
-    geom_histogram(bins = 10, fill = "gold", colour = "black") +
-    theme_minimal()
+#hist_data <- data.frame(x = rnorm(n = 100))
+#ggplot(data = hist_data,
+#       mapping = aes(x = x)) +
+#    geom_histogram(bins = 10, fill = "gold", #colour = "black") +
+#    theme_minimal()
+```
+
+
+```{r fig.asp=.6}
+ggplot(
+  data = biometric_data,
+  mapping = aes(
+    x = handlengte, 
+    color=sexe,
+    fill=sexe)
+) + geom_vline(
+      data=mu_handlengte,
+      aes(
+        xintercept=grp.mean, 
+        color=sexe),
+      linetype="dashed"
+) + 
+  geom_histogram(
+  bins = 10,
+  alpha=0.3,
+  position="identity"
+) + theme_minimal()
+
 ```
 
 :::attention
