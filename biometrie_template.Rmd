@@ -1,6 +1,6 @@
 ---
 title: "Biometrie onderzoek"
-authors: "Cheyenne Brouwer (399308), Kasthury Inparajah (462193), Demi van 't Oever (415069), Willem-Daniël Visser"
+authors: "Cheyenne Brouwer (399308), Kasthury Inparajah (462193), Demi van 't Oever (415069), Willem Daniël Visser(458075)"
 date: "`24-04-2023`"
 output:
   html_document:
@@ -18,19 +18,17 @@ library(ggplot2)
 
 ```
 
-
 ## Inleiding
 
 Naar aanleiding van een schoolopdracht van de module "De Wetenschapplijke Cyclus" genaamd "Workshop Biometrie" is er een onderzoek uitvoerd met twee biometrische aspecten en hun relatie geanalyseerd. Er is onderzoek gedaan naar de relatie tussen de sexe van de mens en de lengte/breedte ratio van de dominante hand van studenten.
 
 De onderszoeksvraag is: "Is er bij de mens een sexe verschil in de lengte/breedte ratio van de hand?". Er wordt er vannuit gegaan dat er bij de mens een sexe verschil in de lengte/breedte ratio van de hand. De nulhypothese luidt dan: "Er is bij de mens een geen sexe verschil in de lengte/breedte ratio van de hand."
 
-
 ### Ontwerp van het experiment
+
 Van 40 proefpersonen, gelijk verdeeld over mannen en vrouwen en willekeurig geselecteerd in en rond het schoolgebouw, zal de sexe gevraagd worden en vervolgens de handlengte en -breedte gemeten worden.
 
-
-:::protocol
+::: protocol
 #### Protocol voor meting handlengte en handbreedte
 
 ##### Benodigdheden
@@ -52,8 +50,6 @@ Een metende onderzoeker legt het maatlat op de handen van de studenten met de nu
 
 Een metende onderzoeker legt het maatlat opnieuw op de handen van de studenten met de nulkant op de onderste duimknokkel en de andere kant in de parallelle richting van het bovenste handstreepje. De metende onderzoekers lezen beide de afstand tussen de onderste duimknoppel en andere kant van de hand en melden dit aan de noterende onderzoekers.
 :::
-
-
 
 ## Analyse
 
@@ -100,31 +96,48 @@ head(mu_ratio)
 
 Let op: als je missende data hebt moet je die specificeren door dit argument toe te voegen: `na.strings = "<jouw NA symbool>"`
 
-
 ### Beschrijvende statistiek
-
-
 
 Onder het kopje data zijn al enkele statistische waardes terug te vinden. In totaal is er bij 40 proefpersonen zowel de handbreedte als handlengte gemeten. Tevens is er naar het geslacht (sexe) gevraagd. Aan het onderzoek hebben 19 vrouwen (F) deelgenomen en 21 mannen (M). De handbreedte van mannen is gemiddeld 107.8mm, waar deze bij vrouwen 96.1mm is. De gemiddelde handlengte bij mannen is 188.7mm, bij vrouwen is dit 174.4mm. De ratio is berekend door handlengte te delen door handbreedte. Bij mannen is de ratio 1.75, terwijl deze bij vrouwen 1.81 is.
 
-LAAT ENKELE BESCHRIJVENDE STATISTISCHE WAARDES ZIEN.
-GEEF EEN OF MEERDERE BOXPLOTS EN HISTOGRAMMEN
-BESPREEK DEZE DATA EN FIGUREN KORT.
-KAN JE IETS ZEGGEN OVER DE DATAVERDELING?
+LAAT ENKELE BESCHRIJVENDE STATISTISCHE WAARDES ZIEN. GEEF EEN OF MEERDERE BOXPLOTS EN HISTOGRAMMEN BESPREEK DEZE DATA EN FIGUREN KORT. KAN JE IETS ZEGGEN OVER DE DATAVERDELING?
 
 ### Welke verdeling?
 
-Hoe kleiner de steekproefgrootte (_sample size_) hoe lastiger het is de onderliggende verdeling vast te stellen. Speel maar eens met dit blokje code, en verander de steekproefgrootte (`n=`) in de `rnorm()` functie en de `breaks=` in de `hist()` functie. 
-Neem voor _n_ bijvoorbeeld achtereenvolgens 10, 100, 1000, 10000, 10000 en voor _breaks_ 5, 10, 50. Wanneer zie je een echte normaalverdeling verschijnen? 
+Hoe kleiner de steekproefgrootte (*sample size*) hoe lastiger het is de onderliggende verdeling vast te stellen. Speel maar eens met dit blokje code, en verander de steekproefgrootte (`n=`) in de `rnorm()` functie en de `breaks=` in de `hist()` functie. Neem voor *n* bijvoorbeeld achtereenvolgens 10, 100, 1000, 10000, 10000 en voor *breaks* 5, 10, 50. Wanneer zie je een echte normaalverdeling verschijnen?
 
 ```{r sampling-demo, fig.asp=.6, out.width='60%', fig.align='center'}
-#hist_data <- data.frame(x = rnorm(n = 100))
-#ggplot(data = hist_data,
-#       mapping = aes(x = x)) +
-#    geom_histogram(bins = 10, fill = "gold", #colour = "black") +
-#    theme_minimal()
+hist_data <- data.frame(x = rnorm(n = 100))
+ggplot(data = hist_data,
+       mapping = aes(x = x)) +
+    geom_histogram(bins=10, fill = "gold", colour = "black", breaks=2) +
+    theme_minimal()
 ```
 
+::: attention
+**Dit *experiment* met de argumenten van `rnorm()` en `hist()` moet je opnemen in je eigen RMarkdown.**\
+Beantwoord deze vragen:
+
+1.  Wat gebeurt er met de vorm van de verdeling als `n` groter wordt?
+
+    -\> Bij 10000 is de histogram parallel gelijk, splitsend bij x=0, ook is de histogram consistenter in de verdeling van de `n` waarden op de balken. Als ik `n` op 10 zet veranderd de verdeling elke keer.
+
+2.  Wat gebeurt er met de spreiding van de data (x-as) als `n` groter wordt, en kan je dat verklaren?
+
+    -\> De spreiding is consistenter iedere keer als de data word verdeelt tussen de balken, dit is omdat de willekeurig gegenereerde getallen met de `rnorm()` formule een kleinere kans hebben om een bepaalde x-waarde te domineren. Daarmee is de willekeurigheid verborgen door een patroon.
+
+3.  Waarom is bij zelfde instellingen voor `n` en `breaks` de uitkomst toch verschillend?
+
+    -\> Dit is omdat x-as evenredig verdeelt is en soms liggen twee getallen erg dicht bij elkaar en moeten daardoor de zelfde bar delen.
+
+4.  Welke minimale `n` geeft het meeste kans om een echte normaalverdeling te zien?
+
+    -\> n=10000, uit de voorbeeld waarden. En anders `oneindig`
+
+5.  Wat voor bijzonders is er aan de hand met het `breaks` argument? Geeft de documentatie daar een verklaring voor?
+
+    -\>
+:::
 
 ```{r fig.asp=.6}
 ggplot(
@@ -139,8 +152,7 @@ ggplot(
         xintercept=grp.mean, 
         color=sexe),
       linetype="dashed"
-) + 
-  geom_histogram(
+) + geom_histogram(
   bins = 10,
   alpha=0.3,
   position="identity"
@@ -158,8 +170,7 @@ ggplot(
         xintercept=grp.mean, 
         color=sexe),
       linetype="dashed"
-) + 
-  geom_histogram(
+) + geom_histogram(
   bins = 10,
   alpha=0.3,
   position="identity"
@@ -183,42 +194,29 @@ ggplot(data = biometric_data,
 
 ```
 
-:::attention
-**Dit _experiment_ met de argumenten van `rnorm()` en `hist()` moet je opnemen in je eigen RMarkdown.**  
-Beantwoord deze vragen:
-
-1. Wat gebeurt er met de vorm van de verdeling als `n` groter wordt?
-2. Wat gebeurt er met de spreiding van de data (x-as) als `n` groter wordt, en kan je dat verklaren?
-3. Waarom is bij zelfde instellingen voor `n` en `breaks` de uitkomst toch verschillend?
-4. Welke minimale `n` geeft het meeste kans om een echte normaalverdeling te zien?
-5. Wat voor bijzonders is er aan de hand met het `breaks` argument? Geeft de documentatie daar een verklaring voor?
-:::
-
 ### Bronnen van variatie
 
-ONDERZOEK BRONNEN VAN VARIATIE
-BESPREEK DIT KORT
+ONDERZOEK BRONNEN VAN VARIATIE BESPREEK DIT KORT
 
 ### De hypothese aannemen?
 
 VOER RELEVANTE STATISTISCHE TESTS UIT
 
-
 ## Reflectie op het experiment
 
-:::info
-Bespreek in je groep de volgende vragen en voeg de antwoorden toe aan je uitgewerkte onderzoeksdocument.  
+::: info
+Bespreek in je groep de volgende vragen en voeg de antwoorden toe aan je uitgewerkte onderzoeksdocument.
 
-1. Zijn de metingen tussen de verschillende meters ook (significant) verschillend? Zo ja, waardoor zou je de verschillen kunnen verklaren?
+1.  Zijn de metingen tussen de verschillende meters ook (significant) verschillend? Zo ja, waardoor zou je de verschillen kunnen verklaren?
 
-2. Onderzoek de verschillen tussen mannen en vrouwen met betrekking tot hand lengte, handbreedte en de ratio.
+2.  Onderzoek de verschillen tussen mannen en vrouwen met betrekking tot hand lengte, handbreedte en de ratio.
 
-3. Zou je het protocol aanpassen na deze ervaring, of was hij voldoende duidelijk en reproduceerbaar?
+3.  Zou je het protocol aanpassen na deze ervaring, of was hij voldoende duidelijk en reproduceerbaar?
 :::
 
-
-:::attention
+::: attention
 #### Wat je moet inleveren
-Voor de verwerking en analyse van je eigen data maak je gebruik van het aangeleverde template RMarkdown document. Daarin doorloop je dezelfde onderzoek stappen als hieronder, maar dan met je eigen data. Aan het einde van de dag gaat dat document, in originele en "geknitte" vorm, samen met je databestand, in een git repo die is opgezet volgens voorschift in de cursushandleiding. De link hiernaar toe gaat in je portfolio op eJournal. Let op dat je _alle_ stappen hebt doorlopen voordat je inlevert. Gebruik ook de RStudio spellingscontrole!  
+
+Voor de verwerking en analyse van je eigen data maak je gebruik van het aangeleverde template RMarkdown document. Daarin doorloop je dezelfde onderzoek stappen als hieronder, maar dan met je eigen data. Aan het einde van de dag gaat dat document, in originele en "geknitte" vorm, samen met je databestand, in een git repo die is opgezet volgens voorschift in de cursushandleiding. De link hiernaar toe gaat in je portfolio op eJournal. Let op dat je *alle* stappen hebt doorlopen voordat je inlevert. Gebruik ook de RStudio spellingscontrole!\
 Vergeet niet jullie namen en studentnummers bovenaan de markdown te zetten!
 :::
