@@ -1,6 +1,6 @@
 ---
 title: "Biometrie onderzoek"
-authors: "Cheyenne Brouwer, Kasthury Inparajah, Demi van 't Oever, Willem-Daniël Visser"
+authors: "Cheyenne Brouwer (399308), Kasthury Inparajah (462193), Demi van 't Oever (415069), Willem-Daniël Visser"
 date: "`24-04-2023`"
 output:
   html_document:
@@ -103,6 +103,8 @@ Let op: als je missende data hebt moet je die specificeren door dit argument toe
 
 ### Beschrijvende statistiek
 
+
+
 Onder het kopje data zijn al enkele statistische waardes terug te vinden. In totaal is er bij 40 proefpersonen zowel de handbreedte als handlengte gemeten. Tevens is er naar het geslacht (sexe) gevraagd. Aan het onderzoek hebben 19 vrouwen (F) deelgenomen en 21 mannen (M). De handbreedte van mannen is gemiddeld 107.8mm, waar deze bij vrouwen 96.1mm is. De gemiddelde handlengte bij mannen is 188.7mm, bij vrouwen is dit 174.4mm. De ratio is berekend door handlengte te delen door handbreedte. Bij mannen is de ratio 1.75, terwijl deze bij vrouwen 1.81 is.
 
 LAAT ENKELE BESCHRIJVENDE STATISTISCHE WAARDES ZIEN.
@@ -162,6 +164,22 @@ ggplot(
   alpha=0.3,
   position="identity"
 ) + theme_minimal()
+
+library(ggplot2)
+ggplot(data = biometric_data,
+       mapping = aes(x = sexe, y = handlengte, fill = sexe)) +
+    geom_boxplot() +
+    geom_point() +
+    labs(x = "Sexe", y = "handlengte") +  
+    theme_minimal() 
+
+ggplot(data = biometric_data,
+       mapping = aes(x = ratio, fill = sexe)) +
+    geom_histogram(bins = 10, colour = "black") + 
+    facet_wrap(. ~ sexe) +                       
+    labs(x = "lengte/breedte ratio") +
+    theme_minimal()
+
 
 ```
 
