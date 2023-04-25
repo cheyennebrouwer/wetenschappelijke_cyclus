@@ -85,22 +85,37 @@ Let op: als je missende data hebt moet je die specificeren door dit argument toe
 
 ### Beschrijvende statistiek
 
-LAAT ENKELE BESCHRIJVENDE STATISTISCHE WAARDES ZIEN.
-GEEF EEN OF MEERDERE BOXPLOTS EN HISTOGRAMMEN
-BESPREEK DEZE DATA EN FIGUREN KORT.
-KAN JE IETS ZEGGEN OVER DE DATAVERDELING?
+```{r statistics}
+biometric_data$ratio <- biometric_data$handlengte / biometric_data$handbreedte
+head(biometric_data)
+```
+
+```{r give ratio and genders of hand length and width}
+#split over gender into list of dataframes
+gender_split_data <- split(x = biometric_data,
+      f = biometric_data$sexe)
+
+#apply a function to report means of both measurements
+sapply(X = gender_split_data,
+       FUN = function(x){
+           c(handlengte = mean(x$handlengte),
+             handbreedte = mean(x$handbreedte),
+             ratio = mean(x$ratio))
+       })
+
+```
 
 ### Welke verdeling?
 
 Hoe kleiner de steekproefgrootte (_sample size_) hoe lastiger het is de onderliggende verdeling vast te stellen. Speel maar eens met dit blokje code, en verander de steekproefgrootte (`n=`) in de `rnorm()` functie en de `breaks=` in de `hist()` functie. 
 Neem voor _n_ bijvoorbeeld achtereenvolgens 10, 100, 1000, 10000, 10000 en voor _breaks_ 5, 10, 50. Wanneer zie je een echte normaalverdeling verschijnen? 
 
-```{r sampling-demo, fig.asp=.6, out.width='60%', fig.align='center'}
-#hist_data <- data.frame(x = rnorm(n = 100))
-#ggplot(data = hist_data,
-#       mapping = aes(x = x)) +
-#    geom_histogram(bins = 10, fill = "gold", #colour = "black") +
-#    theme_minimal()
+```{r simple graph, fig.asp=.6, out.width='60%', fig.align='center'}
+hist_data <- data.frame(x = rnorm(n = 100))
+ggplot(data = hist_data,
+       mapping = aes(x = x)) +
+    geom_histogram(bins = 10, fill = "darkgrey", colour = "white") +
+    theme_minimal()
 ```
 
 
