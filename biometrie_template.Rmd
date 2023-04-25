@@ -42,15 +42,15 @@ Van 40 proefpersonen, gelijk verdeeld over mannen en vrouwen en willekeurig gese
 
 ##### Data verzamelen
 
-Er worden 40 studenten idividueel of in groepjes opgezocht met evenveel mannen, als vrouwen. De studenten worden per persoon gevraagd of zij mee willen doen met een klein onderzoek naar het verschil tussen sexe in de lengte/breedte ratio van de hand. Als deze meestemmen word er gevraagd of deze hun hand naar de metende onderzoekers willen steken en naar hun sexe.
+Er worden 40 studenten idividueel of in groepjes opgezocht met evenveel mannen, als vrouwen. De studenten worden per persoon gevraagd of zij mee willen doen met een klein onderzoek naar het verschil tussen sexe in de lengte/breedte ratio van de hand. Als deze instemmen wordt er gevraagd of deze hun hand naar de metende onderzoekers willen uitsteken en wordt gevraagd naar hun sexe.
 
 ###### Voor het meten van de handlengte
 
-Een metende onderzoeker legt het maatlat op de handen van de studenten met de nulkant op het randje van de middelvinger of het bovenste handstreepje. De andere kant van het maatlat gaat dan richting de andere kant; op het randje van de middelvinger of de bovenste handspreepje. Dan lezen de metende onderzoekers beide de afstand tussen het randje van de middelvinger tot het bovenste handstreepje af en melden dit aan de noterende onderzoekers.
+Een metende onderzoeker legt het maatlat op de handen van de studenten met de nulkant op het randje van de middelvinger of het bovenste handstreepje. De andere kant van de maatlat gaat dan richting de andere kant; op het randje van de middelvinger of de bovenste handspreepje. Dan lezen de metende onderzoekers beide de afstand tussen het randje van de middelvinger tot het bovenste handstreepje af en melden dit aan de noterende onderzoekers.
 
 ###### Voor het meten van de handbreedte
 
-Een metende onderzoeker legt het maatlat opnieuw op de handen van de studenten met de nulkant op het onderste duimknoppel en de andere kant in de paralele richting van het bovenste handstreepje. De metende onderzoekers lezen beide de afstand tussen de onderste duimknoppel en andere kant van de hand en melden dit aan de noterende onderzoekers.
+Een metende onderzoeker legt het maatlat opnieuw op de handen van de studenten met de nulkant op de onderste duimknokkel en de andere kant in de parallelle richting van het bovenste handstreepje. De metende onderzoekers lezen beide de afstand tussen de onderste duimknoppel en andere kant van de hand en melden dit aan de noterende onderzoekers.
 :::
 
 
@@ -62,7 +62,7 @@ Een metende onderzoeker legt het maatlat opnieuw op de handen van de studenten m
 Om data vanuit een tekstbestand in te lezen kan je dit codeblok gebruiken, aannemend dat je data er exact zo uitzien als in bovenstaande voorbeeld:
 
 ```{r demo-data-inlees}
-data_file <- "./Biometrie_3.csv"
+data_file <- "C:/Users/DemiS/OneDrive/Documents/School/De_wetenschappelijke_cyclus/wetenschappelijke_cyclus-main/Biometrie_3.csv"
 
 #data format: laborant_ID,subject_ID,handlengte,handbreedte,sexe
 biometric_data <- read.table(file = data_file,
@@ -70,6 +70,8 @@ biometric_data <- read.table(file = data_file,
                         sep = ",")
 print(biometric_data)
 sort(biometric_data$sexe)
+biometric_data$ratio <- biometric_data$handlengte / biometric_data$handbreedte
+head(biometric_data)
 
 library(plyr)
 mu_handlengte <- ddply(
@@ -78,6 +80,22 @@ mu_handlengte <- ddply(
   summarise,
   grp.mean=mean(handlengte))
 head(mu_handlengte)
+
+library(plyr)
+mu_handbreedte <- ddply(
+  biometric_data, 
+  "sexe", 
+  summarise,
+  grp.mean=mean(handbreedte))
+head(mu_handbreedte)
+
+library(plyr)
+mu_ratio <- ddply(
+  biometric_data, 
+  "sexe", 
+  summarise,
+  grp.mean=mean(ratio))
+head(mu_ratio)
 ```
 
 Let op: als je missende data hebt moet je die specificeren door dit argument toe te voegen: `na.strings = "<jouw NA symbool>"`
@@ -85,37 +103,24 @@ Let op: als je missende data hebt moet je die specificeren door dit argument toe
 
 ### Beschrijvende statistiek
 
-```{r statistics}
-biometric_data$ratio <- biometric_data$handlengte / biometric_data$handbreedte
-head(biometric_data)
-```
+Onder het kopje data zijn al enkele statistische waardes terug te vinden. In totaal is er bij 40 proefpersonen zowel de handbreedte als handlengte gemeten. Tevens is er naar het geslacht (sexe) gevraagd. Aan het onderzoek hebben 19 vrouwen (F) deelgenomen en 21 mannen (M). De handbreedte van mannen is gemiddeld 107.8mm, waar deze bij vrouwen 96.1mm is. De gemiddelde handlengte bij mannen is 188.7mm, bij vrouwen is dit 174.4mm. De ratio is berekend door handlengte te delen door handbreedte. Bij mannen is de ratio 1.75, terwijl deze bij vrouwen 1.81 is.
 
-```{r give ratio and genders of hand length and width}
-#split over gender into list of dataframes
-gender_split_data <- split(x = biometric_data,
-      f = biometric_data$sexe)
-
-#apply a function to report means of both measurements
-sapply(X = gender_split_data,
-       FUN = function(x){
-           c(handlengte = mean(x$handlengte),
-             handbreedte = mean(x$handbreedte),
-             ratio = mean(x$ratio))
-       })
-
-```
+LAAT ENKELE BESCHRIJVENDE STATISTISCHE WAARDES ZIEN.
+GEEF EEN OF MEERDERE BOXPLOTS EN HISTOGRAMMEN
+BESPREEK DEZE DATA EN FIGUREN KORT.
+KAN JE IETS ZEGGEN OVER DE DATAVERDELING?
 
 ### Welke verdeling?
 
 Hoe kleiner de steekproefgrootte (_sample size_) hoe lastiger het is de onderliggende verdeling vast te stellen. Speel maar eens met dit blokje code, en verander de steekproefgrootte (`n=`) in de `rnorm()` functie en de `breaks=` in de `hist()` functie. 
 Neem voor _n_ bijvoorbeeld achtereenvolgens 10, 100, 1000, 10000, 10000 en voor _breaks_ 5, 10, 50. Wanneer zie je een echte normaalverdeling verschijnen? 
 
-```{r simple graph, fig.asp=.6, out.width='60%', fig.align='center'}
-hist_data <- data.frame(x = rnorm(n = 100))
-ggplot(data = hist_data,
-       mapping = aes(x = x)) +
-    geom_histogram(bins = 10, fill = "darkgrey", colour = "white") +
-    theme_minimal()
+```{r sampling-demo, fig.asp=.6, out.width='60%', fig.align='center'}
+#hist_data <- data.frame(x = rnorm(n = 100))
+#ggplot(data = hist_data,
+#       mapping = aes(x = x)) +
+#    geom_histogram(bins = 10, fill = "gold", #colour = "black") +
+#    theme_minimal()
 ```
 
 
@@ -128,6 +133,25 @@ ggplot(
     fill=sexe)
 ) + geom_vline(
       data=mu_handlengte,
+      aes(
+        xintercept=grp.mean, 
+        color=sexe),
+      linetype="dashed"
+) + 
+  geom_histogram(
+  bins = 10,
+  alpha=0.3,
+  position="identity"
+) + theme_minimal()
+
+ggplot(
+  data = biometric_data,
+  mapping = aes(
+    x = handbreedte, 
+    color=sexe,
+    fill=sexe)
+) + geom_vline(
+      data=mu_handbreedte,
       aes(
         xintercept=grp.mean, 
         color=sexe),
