@@ -110,7 +110,7 @@ Hoe kleiner de steekproefgrootte (*sample size*) hoe lastiger het is de onderlig
 ```{r sampling-demo, fig.asp=.6, out.width='60%', fig.align='center'}
 hist_data <- data.frame(
   x = rnorm(
-    n = c(5, 10)
+    n = 10
   )
 )
 ggplot(
@@ -120,9 +120,9 @@ ggplot(
   )
 ) + geom_histogram(
   bins=10, 
+  breaks=c(-0.5, 0, 0.5),
   fill = "gold", 
   colour = "black", 
-  breaks=c(5, 10)
 ) + theme_minimal()
 ```
 
@@ -140,11 +140,11 @@ Beantwoord deze vragen:
 
 3.  Waarom is bij zelfde instellingen voor `n` en `breaks` de uitkomst toch verschillend?
 
-    -\> Dit is omdat x-as evenredig verdeelt is en soms liggen twee getallen erg dicht bij elkaar en moeten daardoor de zelfde bar delen.
+    -\> Dit is omdat `n` het aantal meetwaarden bepaald en `breaks` bepaald waar de balken beginnen en eindigen. Als er waarden in vallen tellen deze mee en verhogen de balk.
 
 4.  Welke minimale `n` geeft het meeste kans om een echte normaalverdeling te zien?
 
-    -\> n=10000, uit de voorbeeld waarden. En anders `oneindig`
+    -\> n=10000, uit de voorbeeld waarden. En anders `oneindig`.
 
 5.  Wat voor bijzonders is er aan de hand met het `breaks` argument? Geeft de documentatie daar een verklaring voor?
 
