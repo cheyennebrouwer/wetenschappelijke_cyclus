@@ -213,40 +213,64 @@ ONDERZOEK BRONNEN VAN VARIATIE BESPREEK DIT KORT
 ```{r}
 
 
-ggplot(data = biometric_data,
-       mapping = aes(x = laborant_id, y = handlengte, fill = laborant_id)) +
-    geom_boxplot() +
-    geom_point() +
-    labs(x = "Laborant id", y = "Handlengte") +  
-    theme_minimal()
+ggplot(
+  data = biometric_data,
+  mapping = aes(
+    x = reorder(laborant_id, handlengte), 
+    y = handlengte, 
+    fill = laborant_id)
+) +
+geom_boxplot() +
+geom_point() +
+scale_fill_manual(values=c("#d45eff", "#56B4E9", "#ffec5e", "#7bfc02"))+
+labs(
+  x = "Laborant id", 
+  y = "Handlengte",
+  title="Verschillen in handlengte tussen laboranten"
+) +  
+guides(fill=guide_legend(title="Laborant id")) +
+theme_minimal()
 
 ggplot(
     data = biometric_data,
     mapping = aes(
-      x = laborant_id, 
+      x = reorder(laborant_id, handbreedte), 
       y = handbreedte, 
       fill = laborant_id
     )
 ) +
 geom_boxplot() +
 geom_point() +
-labs(x = "Laborant id", y = "Handbreedte") +  
+scale_fill_manual(values=c("#d45eff", "#56B4E9", "#ffec5e", "#7bfc02"))+
+labs(
+  x = "Laborant id", 
+  y = "Handbreedte",
+  title="Verschillen in handbreedte tussen laboranten"
+) +  
+guides(fill=guide_legend(title="Laborant id")) +
 theme_minimal()
+
 
 ggplot(
   data = biometric_data,
   mapping = aes(
-    x = laborant_id, 
+    x = reorder(laborant_id, ratio), 
     y = ratio, 
     fill = laborant_id 
   )
 ) +
 geom_boxplot() +
 geom_point() +
+scale_fill_manual(
+  values=c("#d45eff", "#56B4E9", "#ffec5e", "#7bfc02"),
+) +
 labs(
   x = "Laborant id", 
-  y = "Ratio"
-) +  theme_minimal()
+  y = "Ratio",
+  title="Verschillen in ratios tussen laboranten"
+) +  
+guides(fill=guide_legend(title="Laborant id")) + 
+theme_minimal()
 ```
 
 ### De hypothese aannemen?
