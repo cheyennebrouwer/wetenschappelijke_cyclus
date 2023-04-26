@@ -58,7 +58,7 @@ Een metende onderzoeker legt het maatlat opnieuw op de handen van de studenten m
 Om data vanuit een tekstbestand in te lezen kan je dit codeblok gebruiken, aannemend dat je data er exact zo uitzien als in bovenstaande voorbeeld:
 
 ```{r demo-data-inlees}
-data_file <- "C:/Users/DemiS/OneDrive/Documents/School/De_wetenschappelijke_cyclus/wetenschappelijke_cyclus-main/Biometrie_3.csv"
+data_file <- "./Biometrie_3.csv"
 
 #data format: laborant_ID,subject_ID,handlengte,handbreedte,sexe
 biometric_data <- read.table(file = data_file,
@@ -66,6 +66,7 @@ biometric_data <- read.table(file = data_file,
                         sep = ",")
 print(biometric_data)
 sort(biometric_data$sexe)
+biometric_data$laborant_id <- as.factor(biometric_data$laborant_id)
 biometric_data$ratio <- biometric_data$handlengte / biometric_data$handbreedte
 head(biometric_data)
 
@@ -107,11 +108,22 @@ LAAT ENKELE BESCHRIJVENDE STATISTISCHE WAARDES ZIEN. GEEF EEN OF MEERDERE BOXPLO
 Hoe kleiner de steekproefgrootte (*sample size*) hoe lastiger het is de onderliggende verdeling vast te stellen. Speel maar eens met dit blokje code, en verander de steekproefgrootte (`n=`) in de `rnorm()` functie en de `breaks=` in de `hist()` functie. Neem voor *n* bijvoorbeeld achtereenvolgens 10, 100, 1000, 10000, 10000 en voor *breaks* 5, 10, 50. Wanneer zie je een echte normaalverdeling verschijnen?
 
 ```{r sampling-demo, fig.asp=.6, out.width='60%', fig.align='center'}
-hist_data <- data.frame(x = rnorm(n = 100))
-ggplot(data = hist_data,
-       mapping = aes(x = x)) +
-    geom_histogram(bins=10, fill = "gold", colour = "black", breaks=2) +
-    theme_minimal()
+hist_data <- data.frame(
+  x = rnorm(
+    n = c(5, 10)
+  )
+)
+ggplot(
+  data = hist_data,
+  mapping = aes(
+    x = x
+  )
+) + geom_histogram(
+  bins=10, 
+  fill = "gold", 
+  colour = "black", 
+  breaks=c(5, 10)
+) + theme_minimal()
 ```
 
 ::: attention
@@ -136,7 +148,7 @@ Beantwoord deze vragen:
 
 5.  Wat voor bijzonders is er aan de hand met het `breaks` argument? Geeft de documentatie daar een verklaring voor?
 
-    -\>
+    -\> Het overschrijft alle andere instellingen over de horizontale verdeling, de documentatie meld: "Overrides `binwidth`, `bins`, `center`, and `boundary`"
 :::
 
 ```{r fig.asp=.6}
@@ -197,6 +209,45 @@ ggplot(data = biometric_data,
 ### Bronnen van variatie
 
 ONDERZOEK BRONNEN VAN VARIATIE BESPREEK DIT KORT
+
+```{r}
+
+
+ggplot(data = biometric_data,
+       mapping = aes(x = laborant_id, y = handlengte, fill = laborant_id)) +
+    geom_boxplot() +
+    geom_point() +
+    labs(x = "Laborant id", y = "Handlengte") +  
+    theme_minimal()
+
+ggplot(
+    data = biometric_data,
+    mapping = aes(
+      x = laborant_id, 
+      y = handbreedte, 
+      fill = laborant_id
+    )
+) +
+geom_boxplot() +
+geom_point() +
+labs(x = "Laborant id", y = "Handbreedte") +  
+theme_minimal()
+
+ggplot(
+  data = biometric_data,
+  mapping = aes(
+    x = laborant_id, 
+    y = ratio, 
+    fill = laborant_id 
+  )
+) +
+geom_boxplot() +
+geom_point() +
+labs(
+  x = "Laborant id", 
+  y = "Ratio"
+) +  theme_minimal()
+```
 
 ### De hypothese aannemen?
 
