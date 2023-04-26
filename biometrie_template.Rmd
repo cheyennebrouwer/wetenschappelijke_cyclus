@@ -1,7 +1,8 @@
 ---
 title: "Biometrie onderzoek"
-authors: "Cheyenne Brouwer (399308), Kasthury Inparajah (462193), Demi van 't Oever (415069), Willem-Daniël Visser"
-date: "`25-04-2023`"
+authors: "Cheyenne Brouwer (399308), Kasthury Inparajah (462193), Demi van 't Oever (415069), Willem Daniël Visser(458075)"
+date: "`24-04-2023`"
+
 output:
   html_document:
     toc: yes
@@ -18,19 +19,17 @@ library(ggplot2)
 
 ```
 
-
 ## Inleiding
 
 Naar aanleiding van een schoolopdracht van de module "De Wetenschapplijke Cyclus" genaamd "Workshop Biometrie" is er een onderzoek uitvoerd met twee biometrische aspecten en hun relatie geanalyseerd. Er is onderzoek gedaan naar de relatie tussen de sexe van de mens en de lengte/breedte ratio van de dominante hand van studenten.
 
 De onderszoeksvraag is: "Is er bij de mens een sexe verschil in de lengte/breedte ratio van de hand?". Er wordt er vannuit gegaan dat er bij de mens een sexe verschil in de lengte/breedte ratio van de hand. De nulhypothese luidt dan: "Er is bij de mens geen sexe verschil in de lengte/breedte ratio van de hand." De hypothese luidt: "Er is bij de mens een sexe verschil in de lengte/breedte ratio van de hand."
 
-
 ### Ontwerp van het experiment
+
 Van 40 proefpersonen, gelijk verdeeld over mannen en vrouwen en willekeurig geselecteerd in en rond het schoolgebouw, zal de sexe gevraagd worden en vervolgens de handlengte en -breedte gemeten worden.
 
-
-:::protocol
+::: protocol
 #### Protocol voor meting handlengte en handbreedte
 
 ##### Benodigdheden
@@ -53,8 +52,6 @@ Een metende onderzoeker legt het maatlat op de handen van de studenten met de nu
 Een metende onderzoeker legt het maatlat opnieuw op de handen van de studenten met de nulkant op de onderste duimknokkel en de andere kant in de parallelle richting van het bovenste handstreepje. De metende onderzoekers lezen beide de afstand tussen de onderste duimknoppel en andere kant van de hand en melden dit aan de noterende onderzoekers.
 :::
 
-
-
 ## Analyse
 
 ### Lees je eigen data in
@@ -62,7 +59,7 @@ Een metende onderzoeker legt het maatlat opnieuw op de handen van de studenten m
 Om data vanuit een tekstbestand in te lezen kan je dit codeblok gebruiken, aannemend dat je data er exact zo uitzien als in bovenstaande voorbeeld:
 
 ```{r demo-data-inlees}
-data_file <- "C:/Users/DemiS/OneDrive/Documents/School/De_wetenschappelijke_cyclus/wetenschappelijke_cyclus-main/Biometrie_3.csv"
+data_file <- "./Biometrie_3.csv"
 
 #data format: laborant_ID,subject_ID,handlengte,handbreedte,sexe
 biometric_data <- read.table(file = data_file,
@@ -70,6 +67,7 @@ biometric_data <- read.table(file = data_file,
                         sep = ",")
 print(biometric_data)
 sort(biometric_data$sexe)
+biometric_data$laborant_id <- as.factor(biometric_data$laborant_id)
 biometric_data$ratio <- biometric_data$handlengte / biometric_data$handbreedte
 head(biometric_data)
 
@@ -100,22 +98,60 @@ head(mu_ratio)
 
 Let op: als je missende data hebt moet je die specificeren door dit argument toe te voegen: `na.strings = "<jouw NA symbool>"`
 
-
 ### Beschrijvende statistiek
-
-
 
 Onder het kopje data zijn al enkele statistische waardes terug te vinden. In totaal is er bij 40 proefpersonen zowel de handbreedte als handlengte gemeten. Tevens is er naar het geslacht (sexe) gevraagd. Aan het onderzoek hebben 19 vrouwen (F) deelgenomen en 21 mannen (M). De handbreedte van mannen is gemiddeld 107.8mm, waar deze bij vrouwen 96.1mm is. De gemiddelde handlengte bij mannen is 188.7mm, bij vrouwen is dit 174.4mm. De ratio is berekend door handlengte te delen door handbreedte. Bij mannen is de ratio 1.75, terwijl deze bij vrouwen 1.81 is.
 
-LAAT ENKELE BESCHRIJVENDE STATISTISCHE WAARDES ZIEN.
-GEEF EEN OF MEERDERE BOXPLOTS EN HISTOGRAMMEN
-BESPREEK DEZE DATA EN FIGUREN KORT.
-KAN JE IETS ZEGGEN OVER DE DATAVERDELING?
+LAAT ENKELE BESCHRIJVENDE STATISTISCHE WAARDES ZIEN. GEEF EEN OF MEERDERE BOXPLOTS EN HISTOGRAMMEN BESPREEK DEZE DATA EN FIGUREN KORT. KAN JE IETS ZEGGEN OVER DE DATAVERDELING?
 
 ### Welke verdeling?
 
-Hoe kleiner de steekproefgrootte (_sample size_) hoe lastiger het is de onderliggende verdeling vast te stellen. Speel maar eens met dit blokje code, en verander de steekproefgrootte (`n=`) in de `rnorm()` functie en de `breaks=` in de `hist()` functie. 
-Neem voor _n_ bijvoorbeeld achtereenvolgens 10, 100, 1000, 10000, 10000 en voor _breaks_ 5, 10, 50. Wanneer zie je een echte normaalverdeling verschijnen? 
+Hoe kleiner de steekproefgrootte (*sample size*) hoe lastiger het is de onderliggende verdeling vast te stellen. Speel maar eens met dit blokje code, en verander de steekproefgrootte (`n=`) in de `rnorm()` functie en de `breaks=` in de `hist()` functie. Neem voor *n* bijvoorbeeld achtereenvolgens 10, 100, 1000, 10000, 10000 en voor *breaks* 5, 10, 50. Wanneer zie je een echte normaalverdeling verschijnen?
+
+```{r sampling-demo, fig.asp=.6, out.width='60%', fig.align='center'}
+hist_data <- data.frame(
+  x = rnorm(
+    n = 10
+  )
+)
+ggplot(
+  data = hist_data,
+  mapping = aes(
+    x = x
+  )
+) + geom_histogram(
+  bins=10, 
+  breaks=c(-0.5, 0, 0.5),
+  fill = "gold", 
+  colour = "black", 
+) + theme_minimal()
+```
+
+::: attention
+**Dit *experiment* met de argumenten van `rnorm()` en `hist()` moet je opnemen in je eigen RMarkdown.**\
+Beantwoord deze vragen:
+
+1.  Wat gebeurt er met de vorm van de verdeling als `n` groter wordt?
+
+    -\> Bij 10000 is de histogram parallel gelijk, splitsend bij x=0, ook is de histogram consistenter in de verdeling van de `n` waarden op de balken. Als ik `n` op 10 zet veranderd de verdeling elke keer.
+
+2.  Wat gebeurt er met de spreiding van de data (x-as) als `n` groter wordt, en kan je dat verklaren?
+
+    -\> De spreiding is consistenter iedere keer als de data word verdeelt tussen de balken, dit is omdat de willekeurig gegenereerde getallen met de `rnorm()` formule een kleinere kans hebben om een bepaalde x-waarde te domineren. Daarmee is de willekeurigheid verborgen door een patroon.
+
+3.  Waarom is bij zelfde instellingen voor `n` en `breaks` de uitkomst toch verschillend?
+
+    -\> Dit is omdat `n` het aantal meetwaarden bepaald en `breaks` bepaald waar de balken beginnen en eindigen. Als er waarden in vallen tellen deze mee en verhogen de balk.
+
+4.  Welke minimale `n` geeft het meeste kans om een echte normaalverdeling te zien?
+
+    -\> n=10000, uit de voorbeeld waarden. En anders `oneindig`.
+
+5.  Wat voor bijzonders is er aan de hand met het `breaks` argument? Geeft de documentatie daar een verklaring voor?
+
+    -\> Het overschrijft alle andere instellingen over de horizontale verdeling, de documentatie meld: "Overrides `binwidth`, `bins`, `center`, and `boundary`"
+:::
+
 
 ```{r fig.asp=.6}
 ggplot(
@@ -130,8 +166,7 @@ ggplot(
         xintercept=grp.mean, 
         color=sexe),
       linetype="dashed"
-) + 
-  geom_histogram(
+) + geom_histogram(
   bins = 10,
   alpha=0.3,
   position="identity"
@@ -149,8 +184,7 @@ ggplot(
         xintercept=grp.mean, 
         color=sexe),
       linetype="dashed"
-) + 
-  geom_histogram(
+) + geom_histogram(
   bins = 10,
   alpha=0.3,
   position="identity"
@@ -181,22 +215,75 @@ Bij de mannen is de handbreedte net als de handlengte symmetrisch verdeeld. Het 
 Bij de vrouwen is de handbreedte ook net als de handlengte meertoppig verdeeld. Het gemiddelde en de mediaan liggen dus tussen de toppen en de standaardafwijking is relatief groot.
 Bij de mannen en vrouwen samen is de handbreedte symmetrisch verdeeld. Het gemiddelde en de mediaan vallen dus samen.
 
-:::attention
-**Dit _experiment_ met de argumenten van `rnorm()` en `hist()` moet je opnemen in je eigen RMarkdown.**  
-Beantwoord deze vragen:
-
-1. Wat gebeurt er met de vorm van de verdeling als `n` groter wordt?
-2. Wat gebeurt er met de spreiding van de data (x-as) als `n` groter wordt, en kan je dat verklaren?
-3. Waarom is bij zelfde instellingen voor `n` en `breaks` de uitkomst toch verschillend?
-4. Welke minimale `n` geeft het meeste kans om een echte normaalverdeling te zien?
-5. Wat voor bijzonders is er aan de hand met het `breaks` argument? Geeft de documentatie daar een verklaring voor?
-:::
-
 ### Bronnen van variatie
+
+ONDERZOEK BRONNEN VAN VARIATIE BESPREEK DIT KORT
+
+```{r}
+ggplot(
+  data = biometric_data,
+  mapping = aes(
+    x = reorder(laborant_id, handlengte), 
+    y = handlengte, 
+    fill = laborant_id)
+) +
+geom_boxplot() +
+geom_point() +
+scale_fill_manual(values=c("#d45eff", "#56B4E9", "#ffec5e", "#7bfc02"))+
+labs(
+  x = "Laborant id", 
+  y = "Handlengte",
+  title="Verschillen in handlengte tussen laboranten"
+) +  
+guides(fill=guide_legend(title="Laborant id")) +
+theme_minimal()
+
+ggplot(
+    data = biometric_data,
+    mapping = aes(
+      x = reorder(laborant_id, handbreedte), 
+      y = handbreedte, 
+      fill = laborant_id
+    )
+) +
+geom_boxplot() +
+geom_point() +
+scale_fill_manual(values=c("#d45eff", "#56B4E9", "#ffec5e", "#7bfc02"))+
+labs(
+  x = "Laborant id", 
+  y = "Handbreedte",
+  title="Verschillen in handbreedte tussen laboranten"
+) +  
+guides(fill=guide_legend(title="Laborant id")) +
+theme_minimal()
+
+
+ggplot(
+  data = biometric_data,
+  mapping = aes(
+    x = reorder(laborant_id, ratio), 
+    y = ratio, 
+    fill = laborant_id 
+  )
+) +
+geom_boxplot() +
+geom_point() +
+scale_fill_manual(
+  values=c("#d45eff", "#56B4E9", "#ffec5e", "#7bfc02"),
+) +
+labs(
+  x = "Laborant id", 
+  y = "Ratio",
+  title="Verschillen in ratios tussen laboranten"
+) +  
+guides(fill=guide_legend(title="Laborant id")) + 
+theme_minimal()
+```
 
 De bronnen van biologische variatie die ten grondslag liggen aan het verschil in handlengte tussen mannen en vrouwen, zowel als respectievelijk voor mannen en respectievelijk voor vrouwen, zijn de omgeving en overerving. De omgeving kan namelijk inspelen op het werk wat mensen doen, hierin zullen mensen met fysiek zwaar werk meer kans hebben op een grotere handlengte dan mensen die geen fysiek zwaar werk verrichten. In verhouding zal dit verschil tussen mannen en vrouwen groter zijn dan het verschil tussen mannen en vrouwen respectievelijk. 
 
 Overerving is ook een bron van biologische variatie die ten grondslag ligt aan het verschil in handlengte tussen mannen en vrouwen, omdat de kans groter is dat iemand grotere handen heeft als dat patroon terug te zien is in de familie. Bij mannen is er een aanleg voor een grotere handlengte en handbreedte, waar vrouwen in verhouding een aanleg hebben voor een kleinere handlengte en handbreedte.
+
 
 ### De hypothese aannemen?
 
@@ -217,12 +304,12 @@ Als eerste is de Shapiro-Wilk test uitgevoerd. Deze test is bedoeld om te onderz
 
 Omdat er sprake is van een normale verdeling, kan er een onafhankelijkte t-test uitgevoerd worden in plaats van een Mann-Whitney U test. De t-test kan gebruikt worden om de nulhypothese te kunnen aannemen of verworpen. Bij de t-test is een p waarde 0.005448 gevonden, wat inhoudt dat de nulhypothese verworpen wordt. De hypothese wordt daardoor aangenomen. 
 
-De hoofdvraag "Is er bij de mens een sexe verschil in de lengte/breedte ratio van de hand?" kan dus beantwoord worden met de hypothese: "Er is bij de mens een sexe verschil in de lengte/breedte ratio van de hand.".
 
 ## Reflectie op het experiment
 
-:::info
-Bespreek in je groep de volgende vragen en voeg de antwoorden toe aan je uitgewerkte onderzoeksdocument.  
+::: info
+Bespreek in je groep de volgende vragen en voeg de antwoorden toe aan je uitgewerkte onderzoeksdocument.
+
 
 1. Zijn de metingen tussen de verschillende meters ook (significant) verschillend? Zo ja, waardoor zou je de verschillen kunnen verklaren?
 ````{r}
@@ -238,7 +325,8 @@ t.test(laborant1_metingen, laborant2_metingen)
 ```
 Om te bepalen of er significante verschillen tussen de metingen zitten, is er weer gebruik gemaakt van een t-test. Hierbij zijn de metingen tussen de twee laboranten vergeleken. De p-waarde is 0.2912, wat hoger is dan de 0.05. Dit betekent dat er geen significante verschillen zijn tussen de verschillende meters.
 
-2. Onderzoek de verschillen tussen mannen en vrouwen met betrekking tot hand lengte, handbreedte en de ratio.
+2.  Onderzoek de verschillen tussen mannen en vrouwen met betrekking tot hand lengte, handbreedte en de ratio.
+
 
 3. Zou je het protocol aanpassen na deze ervaring, of was hij voldoende duidelijk en reproduceerbaar?
 
@@ -246,9 +334,9 @@ Het protocol was niet duidelijk te volgen, maar wel voldoende reproduceerbaar na
 
 :::
 
-
-:::attention
+::: attention
 #### Wat je moet inleveren
-Voor de verwerking en analyse van je eigen data maak je gebruik van het aangeleverde template RMarkdown document. Daarin doorloop je dezelfde onderzoek stappen als hieronder, maar dan met je eigen data. Aan het einde van de dag gaat dat document, in originele en "geknitte" vorm, samen met je databestand, in een git repo die is opgezet volgens voorschift in de cursushandleiding. De link hiernaar toe gaat in je portfolio op eJournal. Let op dat je _alle_ stappen hebt doorlopen voordat je inlevert. Gebruik ook de RStudio spellingscontrole!  
+
+Voor de verwerking en analyse van je eigen data maak je gebruik van het aangeleverde template RMarkdown document. Daarin doorloop je dezelfde onderzoek stappen als hieronder, maar dan met je eigen data. Aan het einde van de dag gaat dat document, in originele en "geknitte" vorm, samen met je databestand, in een git repo die is opgezet volgens voorschift in de cursushandleiding. De link hiernaar toe gaat in je portfolio op eJournal. Let op dat je *alle* stappen hebt doorlopen voordat je inlevert. Gebruik ook de RStudio spellingscontrole!\
 Vergeet niet jullie namen en studentnummers bovenaan de markdown te zetten!
 :::
