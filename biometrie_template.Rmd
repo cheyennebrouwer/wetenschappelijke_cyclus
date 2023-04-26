@@ -327,6 +327,22 @@ Om te bepalen of er significante verschillen tussen de metingen zitten, is er we
 
 2.  Onderzoek de verschillen tussen mannen en vrouwen met betrekking tot hand lengte, handbreedte en de ratio.
 
+Onderstaand staan de uitkomsten van het gemiddelde van de handbreedte, de handlengte en de ratio.
+Handlengte gemiddelde
+M – 188,7143
+F – 174,4211
+
+Handbreedte gemiddelde
+M – 107,8
+F – 96,10526
+
+Ratio gemiddelde
+M – 1,754023
+F – 1,817057
+
+
+Uit de statistische toetsen die gedaan zijn met de t-test blijkt dat er daadwerkelijk verschil zit tussen de handlengte, handbreedte en ratio van mannen en vrouwen. Uit de statistische toetsen blijkt dat de gemiddelde handlengte 14,3 mm hoger ligt bij mannen dan bij vrouwen en de gemiddelde handbreedte ligt 11,7 mm hoger bij mannen dan bij vrouwen. Tevens blijkt dat het gemiddelde van de ratio bij vrouwen 0,06 hoger ligt dan bij mannen.
+
 
 3. Zou je het protocol aanpassen na deze ervaring, of was hij voldoende duidelijk en reproduceerbaar?
 
