@@ -1,6 +1,6 @@
 ---
 title: "Biometrie onderzoek"
-authors: "Cheyenne Brouwer (399308), Kasthury Inparajah (462193), Demi van 't Oever (415069), Willem Daniël Visser(458075)"
+author: "Cheyenne Brouwer (399308), Kasthury Inparajah (462193), Demi van 't Oever (415069), Willem Daniël Visser(458075)"
 date: "`24-04-2023`"
 
 output:
