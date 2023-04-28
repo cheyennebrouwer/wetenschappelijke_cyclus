@@ -140,30 +140,25 @@ ggplot(
 Beantwoord deze vragen:
 
 1.  Wat gebeurt er met de vorm van de verdeling als `n` groter wordt?
-
-    -\> Bij 10000 is de histogram parallel gelijk, splitsend bij x=0, ook is de histogram consistenter in de verdeling van de `n` waarden op de balken. Als ik `n` op 10 zet veranderd de verdeling elke keer.
     -\> Als “n”, dus het aantal waarnemingen groter wordt verandert de vorm van de verdeling langzamerhand in een normaal verdeling. De normaal verdeling is een klokvormig figuur. 
+Bij 10000 is de histogram parallel gelijk, splitsend bij x=0, ook is de histogram consistenter in de verdeling van de `n` waarden op de balken. Als ik `n` op 10 zet veranderd de verdeling elke keer.
+
 
 2.  Wat gebeurt er met de spreiding van de data (x-as) als `n` groter wordt, en kan je dat verklaren?
 
-    -\> De spreiding is consistenter iedere keer als de data word verdeelt tussen de balken, dit is omdat de willekeurig gegenereerde getallen met de `rnorm()` formule een kleinere kans hebben om een bepaalde x-waarde te domineren. Daarmee is de willekeurigheid verborgen door een patroon.
     -\> Als de “n” groter wordt, verkleind de spreiding van de data op de x-as. Dit komt doordat de steekproefgemiddelden (gemiddelde van de waarde van “n”) betrouwbaarder worden als “n” groter wordt en dichterbij het werkelijke populatiegemiddelde komen. Hierdoor is er minder variatie op de x-as, omdat de resultaten die worden gemeten hetzelfde of bijna hetzelfde zijn. 
 
 3.  Waarom is bij zelfde instellingen voor `n` en `breaks` de uitkomst toch verschillend?
 
-    -\> Dit is omdat `n` het aantal meetwaarden bepaald en `breaks` bepaald waar de balken beginnen en eindigen. Als er waarden in vallen tellen deze mee en verhogen de balk.
     -\> Dit komt omdat, ondanks dat “n” en “breaks” parameters zijn van dezelfde functie, ze toch andere taken hebben. De parameter “n” bepaalt bijvoorbeeld het aantal bins (de staven van het histogram) en “breaks” bepaalt de grenzen van de bins. Het aantal bins kan hierbij wel verschillen van het aantal opgegeven “breaks”, dit zorgt voor de verschillende uitkomsten, zelfs bij dezelfde instellingen voor “n” en “breaks”. 
 
 4.  Welke minimale `n` geeft het meeste kans om een echte normaalverdeling te zien?
 
-    -\> n=10000, uit de voorbeeld waarden. En anders `oneindig`.
-    -\> Over het algemeen wordt er vanuit gegaan dat een steekproefgrootte van minimaal 30 (n=30) representatief is en dus een echte normaalverdeling weergeeft. Dit wordt ook wel de regel van steekproefomvang 30 genoemd. 
+    -\> Bij de minimale waarde n=100 begint het op een normaalverdeling te lijken.
 
 5.  Wat voor bijzonders is er aan de hand met het `breaks` argument? Geeft de documentatie daar een verklaring voor?
 
-    -\> Het overschrijft alle andere instellingen over de horizontale verdeling, de documentatie meld: "Overrides `binwidth`, `bins`, `center`, and `boundary`"
-    -\> De uitkomst van het histogram kan variëren bij de “breaks” argument. Zelfs als de instellingen voor “n” en “break” hetzelfde zijn. Dit komt doordat het argument “breaks” een optionele parameter is en R soms automatisch de verdeling van de gegevens kan aanpassen. Als er wel een waarde wordt opgegeven voor “breaks” zal R deze waarde aanhouden. 
-
+    -\> De uitkomst van het histogram kan variëren bij de “breaks” argument. Zelfs als de instellingen voor “n” en “break” hetzelfde zijn. Dit komt doordat het argument “breaks” een optionele parameter is en R soms automatisch de verdeling van de gegevens kan aanpassen. Als er wel een waarde wordt opgegeven voor “breaks” zal R deze waarde aanhouden. Het overschrijft dus alle andere instellingen over de horizontale verdeling, de documentatie medlt: "overrides `binwidth`, `bins`, `center`, and `boundary`".
 
 :::
 
