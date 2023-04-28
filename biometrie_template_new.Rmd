@@ -162,15 +162,15 @@ Bij 10000 is de histogram parallel gelijk, splitsend bij x=0, ook is de histogra
 
 :::
 
-
 ```{r fig.asp=.6}
 ggplot(
   data = biometric_data,
   mapping = aes(
-    x = handlengte, 
+    x = handlengte,
     color=sexe,
     fill=sexe)
-) + geom_vline(
+) + labs(x = "handlengte", y = "count", title = "Verdeling van de handlengte onder mannen en vrouwen") +
+  geom_vline(
       data=mu_handlengte,
       aes(
         xintercept=grp.mean, 
@@ -185,10 +185,11 @@ ggplot(
 ggplot(
   data = biometric_data,
   mapping = aes(
-    x = handbreedte, 
+    x = handbreedte,
     color=sexe,
     fill=sexe)
-) + geom_vline(
+) + labs(x = "handbreedte", y = "count", title = "Verdeling van de handbreedte onder mannen en vrouwen") +
+  geom_vline(
       data=mu_handbreedte,
       aes(
         xintercept=grp.mean, 
@@ -197,22 +198,21 @@ ggplot(
 ) + geom_histogram(
   bins = 10,
   alpha=0.3,
-  position="identity"
-) + theme_minimal()
+  position="identity") + theme_minimal()
 
 library(ggplot2)
 ggplot(data = biometric_data,
        mapping = aes(x = sexe, y = handlengte, fill = sexe)) +
     geom_boxplot() +
     geom_point() +
-    labs(x = "Sexe", y = "handlengte") +  
+    labs(x = "Sexe", y = "handlengte", title = "Verdeling van handlengte onder mannen en vrouwen") +  
     theme_minimal() 
 
 ggplot(data = biometric_data,
        mapping = aes(x = ratio, fill = sexe)) +
     geom_histogram(bins = 10, colour = "black") + 
     facet_wrap(. ~ sexe) +                       
-    labs(x = "lengte/breedte ratio") +
+    labs(x = "lengte/breedte ratio", y = "count", title = "Verdeling van de lengte breedte ratio onder mannen en vrouwen") +
     theme_minimal()
 
 
