@@ -1,21 +1,21 @@
 # wetenschappelijke_cyclus
 
-## Header
+## Koptekst
 
-Authors: Demi van 't Oever, Cheyenne Brouwer, Kasthury Inparajah, Willem-Daniël Visser
-Version: 1.0
-Date: 16-05-2023
+Auteurs: Demi van 't Oever, Cheyenne Brouwer, Kasthury Inparajah, Willem-Daniël Visser
+Versie: 1.0
+Datum: 16-05-2023
 
-## Description:
+## Beschrijving:
 Biometrie betekent het vaststellen van meetbare eigenschappen van levende wezens. Dit kunnen verschillende zaken zijn, zoals BMI, buikomtrek, oogkleur en lengte. Voor het onderzoek van handbiometrie is er in een groep gekeken naar de ratio tussen handlengte en handbreedte, in het bijzonder naar het verschil tussen de geslachten.
 
-## Installation
+## Installatie
 Voor het uitvoeren van het project over handbiometrie moeten meerdere onderdelen geïnstalleerd worden.
 
 R & Rstudio
 Voor mac en Windows, gebruik deze link om R en Rstudio te downloaden [R & Rstudio](https://posit.co/download/rstudio-desktop/)
 
-The needed libraries are:
+De vereiste libraries zijn:
 
 * ggplot
 Installeer ggplot door de terminal te openen in Rstudio and voer in "install.packages("ggplot2")"
@@ -34,6 +34,6 @@ Voor support, e-mail naar:
 * [Willem-Daniël Visser](wi.d.visser@st.hanze.nl)
 
 
-## Acknowledgements
+## Dankbetuigingen
 Michiel Noback
 Fenna Feenstra
