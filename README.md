@@ -3,7 +3,9 @@
 ## Koptekst
 
 Auteurs: Demi van 't Oever, Cheyenne Brouwer, Kasthury Inparajah, Willem-Daniël Visser
+
 Versie: 1.0
+
 Datum: 16-05-2023
 
 ## Beschrijving:
